@@ -1,1 +1,5 @@
 /documents
+*.iml
+.idea
+.vscode
+.vs
