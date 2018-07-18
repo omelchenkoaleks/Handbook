@@ -3,6 +3,7 @@ package com.omelchenkoaleks.handbook;
 import android.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -50,9 +51,17 @@ public class MainActivity extends AppCompatActivity {
             SplashFragment splashFragment = new SplashFragment();
 
             mFragmentManager.beginTransaction()
-                    .replace(R.id.container, splashFragment)
+                    .replace(R.id.content_frame, splashFragment)
                     .addToBackStack(null)
                     .commit();
+        }
+    }
+
+    private void setUI() {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        if (toolbar != null) {
+            toolbar.setTitleTextColor(getResources().getColor(R.color.white));
+            setSupportActionBar(toolbar);
         }
     }
 }
