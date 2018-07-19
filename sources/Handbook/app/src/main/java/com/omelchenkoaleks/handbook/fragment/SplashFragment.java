@@ -1,4 +1,4 @@
-package com.omelchenkoaleks.handbook;
+package com.omelchenkoaleks.handbook.fragment;
 
 
 import android.app.Fragment;
@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.omelchenkoaleks.handbook.R;
 
 import java.util.concurrent.TimeUnit;
 
