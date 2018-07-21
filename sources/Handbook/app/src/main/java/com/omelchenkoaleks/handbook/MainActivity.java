@@ -15,7 +15,10 @@ import android.widget.Toast;
 
 import com.omelchenkoaleks.handbook.adapter.TabAdapter;
 import com.omelchenkoaleks.handbook.dialog.AddingTaskDialogFragment;
+import com.omelchenkoaleks.handbook.fragment.CurrentTaskFragment;
+import com.omelchenkoaleks.handbook.fragment.DoneTaskFragment;
 import com.omelchenkoaleks.handbook.fragment.SplashFragment;
+import com.omelchenkoaleks.handbook.model.ModelTask;
 
 public class MainActivity extends AppCompatActivity
         implements AddingTaskDialogFragment.AddingTaskListener {
@@ -23,6 +26,11 @@ public class MainActivity extends AppCompatActivity
     FragmentManager mFragmentManager;
 
     PreferenceHelper mPreferenceHelper;
+
+    TabAdapter tabAdapter;
+
+    CurrentTaskFragment mCurrentTaskFragment;
+    DoneTaskFragment mDoneTaskFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +90,7 @@ public class MainActivity extends AppCompatActivity
         tabLayout.addTab(tabLayout.newTab().setText(R.string.done_task));
 
         final ViewPager viewPager = findViewById(R.id.pager);
-        TabAdapter tabAdapter = new TabAdapter(mFragmentManager, 2);
+        tabAdapter = new TabAdapter(mFragmentManager, 2);
 
         viewPager.setAdapter(tabAdapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
@@ -105,6 +113,9 @@ public class MainActivity extends AppCompatActivity
 
         });
 
+        mCurrentTaskFragment = (CurrentTaskFragment) tabAdapter.getItem(TabAdapter.CURRENT_TASK_FRAGMENT_POSITION);
+        mDoneTaskFragment = (DoneTaskFragment) tabAdapter.getItem(TabAdapter.DONE_TASK_FRAGMENT_POSITION);
+
         FloatingActionButton floatingActionButton = findViewById(R.id.fab);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,8 +127,8 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onTaskAdded() {
-        Toast.makeText(this, "Task added.", Toast.LENGTH_LONG).show();
+    public void onTaskAdded(ModelTask newTask) {
+        mCurrentTaskFragment.addTask(newTask);
     }
 
     @Override

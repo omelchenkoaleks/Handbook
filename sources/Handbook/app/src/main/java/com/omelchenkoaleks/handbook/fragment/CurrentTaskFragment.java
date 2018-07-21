@@ -3,11 +3,15 @@ package com.omelchenkoaleks.handbook.fragment;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.omelchenkoaleks.handbook.R;
+import com.omelchenkoaleks.handbook.adapter.CurrentTaskAdapter;
+import com.omelchenkoaleks.handbook.model.ModelTask;
 
 
 /**
@@ -15,6 +19,10 @@ import com.omelchenkoaleks.handbook.R;
  */
 public class CurrentTaskFragment extends Fragment {
 
+    private RecyclerView rvCurrentTask;
+    private RecyclerView.LayoutManager mLayoutManager;
+
+    private CurrentTaskAdapter mAdapter;
 
     public CurrentTaskFragment() {
         // Required empty public constructor
@@ -24,8 +32,39 @@ public class CurrentTaskFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_current_task, container, false);
+
+        View rootView = inflater.inflate(R.layout.fragment_current_task, container, false);
+
+        rvCurrentTask = rootView.findViewById(R.id.rvCurrentTasks);
+
+        mLayoutManager = new LinearLayoutManager(getActivity());
+
+        rvCurrentTask.setLayoutManager(mLayoutManager);
+
+        mAdapter = new CurrentTaskAdapter();
+        rvCurrentTask.setAdapter(mAdapter);
+
+        return rootView;
+    }
+
+    public void addTask(ModelTask newTask) {
+        int position = -1;
+
+        for (int i = 0; i < mAdapter.getItemCount(); i++) {
+            if (mAdapter.getItem(i).isTask()) {
+                ModelTask task = (ModelTask) mAdapter.getItem(i);
+                if (newTask.getDate() < task.getDate()) {
+                    position = i;
+                    break;
+                }
+            }
+        }
+
+        if (position != -1) {
+            mAdapter.addItem(position, newTask);
+        } else {
+            mAdapter.addItem(newTask);
+        }
     }
 
 }
