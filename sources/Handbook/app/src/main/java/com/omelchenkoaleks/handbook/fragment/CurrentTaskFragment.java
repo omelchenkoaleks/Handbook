@@ -17,12 +17,7 @@ import com.omelchenkoaleks.handbook.model.ModelTask;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CurrentTaskFragment extends Fragment {
-
-    private RecyclerView rvCurrentTask;
-    private RecyclerView.LayoutManager mLayoutManager;
-
-    private CurrentTaskAdapter mAdapter;
+public class CurrentTaskFragment extends TaskFragment {
 
     public CurrentTaskFragment() {
         // Required empty public constructor
@@ -35,36 +30,15 @@ public class CurrentTaskFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_current_task, container, false);
 
-        rvCurrentTask = rootView.findViewById(R.id.rvCurrentTasks);
+        mRecyclerView = rootView.findViewById(R.id.rvCurrentTasks);
 
         mLayoutManager = new LinearLayoutManager(getActivity());
 
-        rvCurrentTask.setLayoutManager(mLayoutManager);
+        mRecyclerView.setLayoutManager(mLayoutManager);
 
-        mAdapter = new CurrentTaskAdapter();
-        rvCurrentTask.setAdapter(mAdapter);
+        mAdapter = new CurrentTaskAdapter(this);
+        mRecyclerView.setAdapter(mAdapter);
 
         return rootView;
     }
-
-    public void addTask(ModelTask newTask) {
-        int position = -1;
-
-        for (int i = 0; i < mAdapter.getItemCount(); i++) {
-            if (mAdapter.getItem(i).isTask()) {
-                ModelTask task = (ModelTask) mAdapter.getItem(i);
-                if (newTask.getDate() < task.getDate()) {
-                    position = i;
-                    break;
-                }
-            }
-        }
-
-        if (position != -1) {
-            mAdapter.addItem(position, newTask);
-        } else {
-            mAdapter.addItem(newTask);
-        }
-    }
-
 }

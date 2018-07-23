@@ -15,10 +15,7 @@ import com.omelchenkoaleks.handbook.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DoneTaskFragment extends Fragment {
-
-    RecyclerView rvDoneTasks;
-    RecyclerView.LayoutManager mLayoutManager;
+public class DoneTaskFragment extends TaskFragment {
 
     public DoneTaskFragment() {
         // Required empty public constructor
@@ -31,9 +28,9 @@ public class DoneTaskFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_done_task, container, false);
 
-        rvDoneTasks = rootView.findViewById(R.id.rvDoneTasks);
+        mRecyclerView = rootView.findViewById(R.id.rvDoneTasks);
 
-        rvDoneTasks.setLayoutManager(mLayoutManager);
+        mRecyclerView.setLayoutManager(mLayoutManager);
 
         mLayoutManager = new LinearLayoutManager(getActivity());
 
